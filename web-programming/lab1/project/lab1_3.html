@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>1.3. Радевич-Винницький КІ-402</title>
+</head>
+
+<body>
+    <script>
+        "use strict";
+        alert("Лінійні алгоритми");
+
+        let n = parseInt(prompt("Введіть кількість кутів n", ""));
+        let r = parseInt(prompt("Введіть радіус r", ""));
+
+        let a = 2 * r * Math.tan(Math.PI / n);
+        let p = a * n;
+        let s = (1 / 2) * n * a * r;
+        let circumscribedCircleArea = Math.PI * Math.pow(r, 2);
+
+        alert(
+            "Довжина сторони = " + a.toFixed(2) + "\n" +
+            "Площа = " + s.toFixed(2) + "\n" +
+            "Периметр = " + p.toFixed(2) + "\n" +
+            "Площа описаного кола = " + circumscribedCircleArea.toFixed(2)
+        );
+
+    </script>
+</body>
+
+</html>
