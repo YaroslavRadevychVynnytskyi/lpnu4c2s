@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>3.5 Радевич-Винницький КІ-402</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+        .text-block {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <script>
+        "use strict";
+
+        function printText(txt, size = 14) {
+            document.write(`<div class="text-block" style="font-size:${size}pt;">${txt}</div>`);
+        }
+
+        printText("Великий шрифт", 32); 
+        printText("Шрифт за замовчуванням - перший рядок"); 
+        printText("Шрифт за замовчуванням - другий рядок"); 
+        printText("Малий шрифт", 8);
+    </script>
+</body>
+</html>

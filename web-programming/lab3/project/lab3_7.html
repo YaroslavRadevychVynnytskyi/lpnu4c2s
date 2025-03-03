@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>3.7 Радевич-Винницький КІ-402</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f0f0f0;
+        }
+        .output {
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Демонстрація використання функції як змінної</h2>
+
+    <script>
+        "use strict";
+
+        let i = 5;
+
+        function f(a, b, c) {
+            if (a > b) return c;
+        }
+
+        document.write(`<div class="output">Значення змінної i: ${i.valueOf()}</div>`);
+        document.write(`<div class="output">Значення змінної f:<br>${f.toString()}</div>`);
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>3.1 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        "use strict";
+        let today = new Date();
+        let hours = today.getHours();
+        let minute = today.getMinutes();
+        
+        if (minute < 10) minute = "0" + minute;
+        
+        let time12;
+        if (hours < 12) {
+            time12 = hours + ":" + minute + " am";
+        } else {
+            time12 = (hours - 12) + ":" + minute + " pm";
+        }
+        
+        console.log("Поточний час -", time12);
+        alert("Поточний час - " + time12);
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3.8 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Використання arguments</h1>
+    <p id="output"></p>
+
+    <script>
+        function showArguments() {
+            let result = "Аргументи функції: ";
+            for (let i = 0; i < arguments.length; i++) {
+                result += arguments[i] + ", ";
+            }
+            document.getElementById("output").textContent = result;
+        }
+
+        showArguments(1, 2, "три", 4.5);
+    </script>
+</body>
+</html>
