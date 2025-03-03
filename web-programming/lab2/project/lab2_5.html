@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>2.1 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        "use strict";
+
+        let car = {
+            brand: "Toyota",
+            model: "Corolla",
+            year: 2020,
+            color: "blue",
+            fuelType: "petrol"
+        };
+
+        document.write("<p>Властивості об'єкта <b>car</b>:</p>");
+        for (let property in car) {
+            document.write(property + ": " + car[property] + "<br>");
+        }
+    </script>
+</body>
+</html>

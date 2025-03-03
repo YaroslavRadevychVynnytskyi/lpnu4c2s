@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>2.1 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        "use strict";
+
+        let dayNumber = parseInt(prompt("Введіть число від 1 до 7, щоб дізнатися день тижня:"));
+
+        let dayName;
+
+        switch (dayNumber) {
+            case 1:
+                dayName = "Понеділок";
+                break;
+            case 2:
+                dayName = "Вівторок";
+                break;
+            case 3:
+                dayName = "Середа";
+                break;
+            case 4:
+                dayName = "Четвер";
+                break;
+            case 5:
+                dayName = "П'ятниця";
+                break;
+            case 6:
+                dayName = "Субота";
+                break;
+            case 7:
+                dayName = "Неділя";
+                break;
+            default:
+                dayName = "Невірне число! Будь ласка, введіть число від 1 до 7.";
+        }
+
+        document.write("<p style='text-align:center'>День тижня: <strong>" + dayName + "</strong></p>");
+    </script>
+</body>
+</html>
