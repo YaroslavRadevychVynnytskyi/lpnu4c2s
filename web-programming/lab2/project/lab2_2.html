@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>2.1 Радевич-Винницький КІ-402</title>
+</head>
+
+<body>
+  <h2>Max val evaluation</h2>
+
+  <script>
+    "use strict";
+    let val1 = parseFloat(prompt("Enter val 1:", "0"));
+    let val2 = parseFloat(prompt("Enter val 2:", "0"));
+    let val3 = parseFloat(prompt("Enter val 3:", "0"));
+
+    if (isNaN(val1) || isNaN(val2) || isNaN(val3)) {
+      document.write("<p style='color:red'>Error: Incorrect value entered!</p>");
+    } else {
+      if (val1 > val2 && val1 > val3) {
+        document.write("Max is val1: ", val1);
+      } else if (val2 > val3) {
+        document.write("Max is val2: ", val2);
+      } else {
+        document.write("Max is val3: ", val3);
+      }
+
+      let maxVal = val1 > val2 ? val1 : val2;
+      maxVal = maxVal > val3 ? maxVal : val3;
+
+      const averageVal = (val1 + val2 + val3) / 3;
+      document.write("<p>Average val: ", averageVal, "</p>");
+    }
+  </script>
+</body>
+
+</html>

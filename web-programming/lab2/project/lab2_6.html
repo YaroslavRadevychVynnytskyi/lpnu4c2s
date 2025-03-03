@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>2.1 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        "use strict";
+
+        let guess = Math.floor(Math.random() * 101); 
+        let isPlaying = true;
+        let userNumber; 
+        let attempts = 0; 
+
+        let answer = confirm("Хочете зіграти в гру 'Вгадай число'?");
+        
+        if (answer) {
+            while (isPlaying) {
+                userNumber = parseInt(prompt("Введіть число від 0 до 100:"));
+                attempts++;
+
+                if (userNumber === guess) {
+                    alert(`Вітаємо! Ви вгадали число ${guess} за ${attempts} спроб.`);
+                    isPlaying = false; 
+                } else if (userNumber > guess) {
+                    alert("Загадане число менше. Спробуйте ще раз!");
+                } else {
+                    alert("Загадане число більше. Спробуйте ще раз!");
+                }
+            }
+        } else {
+            alert("Шкода. Може, в інший раз?");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>2.1 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        "use strict";
+
+        document.write("<p>Використання оператора циклу <b>FOR</b></p>");
+
+        let number = parseInt(prompt("Введіть число для обчислення факторіалу:"));
+        let factorialFor = 1;
+
+        for (let i = 1; i <= number; i++) {
+            factorialFor = factorialFor * i;
+        }
+
+        document.write("Факторіал числа " + number + " (FOR): " + factorialFor + "<br>");
+
+        document.write("<p>Використання оператора циклу <b>WHILE</b></p>");
+
+        let factorialWhile = 1;
+        let j = 1;
+        while (j <= number) {
+            factorialWhile = factorialWhile * j;
+            j++;
+        }
+
+        document.write("Факторіал числа " + number + " (WHILE): " + factorialWhile + "<br>");
+
+        document.write("<p>Використання оператора циклу <b>DO WHILE</b></p>");
+
+        let factorialDoWhile = 1;
+        let k = 1;
+        do {
+            factorialDoWhile = factorialDoWhile * k;
+            k++;
+        } while (k <= number);
+
+        document.write("Факторіал числа " + number + " (DO WHILE): " + factorialDoWhile + "<br>");
+    </script>
+</body>
+</html>
