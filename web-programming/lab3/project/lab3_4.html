@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>3.4 Радевич-Винницький КІ-402</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+            background-color: #f0f0f0;
+        }
+        .result {
+            font-size: 24px;
+            color: #333;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        input {
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Калькулятор суми двох чисел</h1>
+
+    <input type="number" id="num1" placeholder="Введіть перше число">
+    <input type="number" id="num2" placeholder="Введіть друге число">
+
+    <button onclick="calculateSum()">Обчислити суму</button>
+
+    <div class="result" id="result"></div>
+
+    <script>
+        "use strict";
+
+        function AddNums(firstnum, secondnum) {
+            return firstnum + secondnum;
+        }
+
+        function calculateSum() {
+            const num1 = parseFloat(document.getElementById("num1").value);
+            const num2 = parseFloat(document.getElementById("num2").value);
+
+            if (isNaN(num1) || isNaN(num2)) {
+                alert("Будь ласка, введіть обидва числа!");
+                return;
+            }
+
+            const sum = AddNums(num1, num2);
+
+            const resultElement = document.getElementById("result");
+            resultElement.textContent = `${num1} + ${num2} = ${sum}`;
+        }
+    </script>
+</body>
+</html>

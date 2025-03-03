@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>3.2 Радевич-Винницький КІ-402</title>
+    <style>
+        .day {
+            font-family: Arial, sans-serif;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        "use strict";
+        function weekDay(size, day, color) {
+            return `<div class="day" style="font-size: ${size}px; color: ${color};">${day}</div>`;
+        }
+
+        let daysOfWeek = ["понеділок", "вівторок", "середа", "четвер", "п'ятниця", "субота", "неділя"];
+        let sizes = [20, 22, 24, 26, 28, 30, 32];
+        let colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+
+        for (let i = 0; i < daysOfWeek.length; i++) {
+            document.write(weekDay(sizes[i], daysOfWeek[i], colors[i]));
+        }
+    </script>
+</body>
+</html>
