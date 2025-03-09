@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <title>5.3 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Шифрування тексту</h1>
+    <textarea id="inputText" rows="10" cols="50" placeholder="Введіть текст тут..."></textarea><br><br>
+    <button onclick="encryptText()">Зашифрувати текст</button>
+    <p id="encryptedText"></p>
+
+    <script>
+        function encryptText() {
+            // Отримуємо введений текст
+            let inputText = document.getElementById("inputText").value;
+
+            // Функція для шифрування одного символу
+            function encryptChar(char) {
+                // Перевіряємо, чи це літера українського алфавіту
+                if (/[а-яА-Я]/.test(char)) {
+                    // Визначаємо код символу
+                    let code = char.charCodeAt(0);
+
+                    // Зміщуємо код на 1
+                    if (char === 'я') {
+                        return 'а';
+                    } else if (char === 'Я') {
+                        return 'А';
+                    } else {
+                        return String.fromCharCode(code + 1);
+                    }
+                }
+                // Якщо це не літера, повертаємо символ без змін
+                return char;
+            }
+
+            // Шифруємо весь текст
+            let encryptedText = inputText.split('').map(encryptChar).join('');
+
+            // Виводимо зашифрований текст
+            document.getElementById("encryptedText").innerText = "Зашифрований текст: " + encryptedText;
+        }
+    </script>
+</body>
+</html>

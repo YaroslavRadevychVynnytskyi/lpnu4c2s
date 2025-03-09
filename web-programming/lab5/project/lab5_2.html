@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <title>5.2 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Обробка тексту</h1>
+    <textarea id="inputText" rows="10" cols="50" placeholder="Введіть текст тут..."></textarea><br><br>
+    <button onclick="processText()">Обробити текст</button>
+    <p id="outputText"></p>
+    <p id="thirdWordLength"></p>
+    <p id="swappedText"></p>
+
+    <script>
+        function processText() {
+            // Отримуємо введений текст
+            let inputText = document.getElementById("inputText").value.trim();
+
+            // Розділяємо текст на слова
+            let words = inputText.split(/\s+/); // \s+ враховує будь-яку кількість пробілів
+
+            // Перевіряємо, чи є достатньо слів
+            if (words.length < 3) {
+                alert("У тексті має бути принаймні три слова!");
+                return;
+            }
+
+            // Підраховуємо кількість літер у третьому слові
+            let thirdWord = words[2];
+            let thirdWordLength = thirdWord.length;
+
+            // Міняємо місцями перше та останнє слова
+            let firstWord = words[0];
+            let lastWord = words[words.length - 1];
+            words[0] = lastWord;
+            words[words.length - 1] = firstWord;
+            let swappedText = words.join(" ");
+
+            // Виводимо результати
+            document.getElementById("outputText").innerText = "Введений текст: " + inputText;
+            document.getElementById("thirdWordLength").innerText = "Кількість літер у третьому слові: " + thirdWordLength;
+            document.getElementById("swappedText").innerText = "Текст після заміни першого та останнього слова: " + swappedText;
+        }
+    </script>
+</body>
+</html>
