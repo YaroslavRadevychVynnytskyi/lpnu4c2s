@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<head>
+    <title>5.1 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Обробка тексту</h1>
+    <textarea id="inputText" rows="10" cols="50" placeholder="Введіть текст тут..."></textarea><br><br>
+    <button onclick="processText()">Обробити текст</button>
+    <p id="outputText"></p>
+    <p id="countA"></p>
+    <p id="countB"></p>
+
+    <script>
+        function processText() {
+            // Отримуємо введений текст
+            let inputText = document.getElementById("inputText").value;
+
+            // Вставляємо пробіл після кожного символу ','
+            let processedText = inputText.replace(/,/g, ', ');
+
+            // Підраховуємо кількість букв 'A' та 'B'
+            let countA = (processedText.match(/A/gi) || []).length;
+            let countB = (processedText.match(/B/gi) || []).length;
+
+            // Виводимо оброблений текст
+            document.getElementById("outputText").innerText = "Оброблений текст: " + processedText;
+
+            // Виводимо кількість букв 'A' та 'B'
+            document.getElementById("countA").innerText = "Кількість букв 'A': " + countA;
+            document.getElementById("countB").innerText = "Кількість букв 'B': " + countB;
+        }
+    </script>
+</body>
+</html>
