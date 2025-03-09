@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <title>4.2 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        // 1. Створення масиву з 15 випадкових елементів
+        let arr = [];
+        for (let i = 0; i < 15; i++) {
+            arr.push(Math.floor(Math.random() * 100)); // Генеруємо випадкові числа від 0 до 99
+        }
+        document.write("Початковий масив: " + arr.join(" ") + "<br>");
+
+        // 2. Знаходження мінімального елемента
+        let minIndex = 0;
+        for (let i = 1; i < arr.length; i++) {
+            if (arr[i] < arr[minIndex]) {
+                minIndex = i;
+            }
+        }
+        document.write("Мінімальний елемент: " + arr[minIndex] + " (індекс " + minIndex + ")<br>");
+
+        // 3. Перевірка, чи мінімальний елемент не перший
+        if (minIndex > 0) {
+            // 4. Обмін місцями з попереднім елементом
+            let temp = arr[minIndex];
+            arr[minIndex] = arr[minIndex - 1];
+            arr[minIndex - 1] = temp;
+            document.write("Масив після обміну: " + arr.join(" ") + "<br>");
+        } else {
+            document.write("Мінімальний елемент перший, обмін неможливий.<br>");
+        }
+    </script>
+</body>
+</html>

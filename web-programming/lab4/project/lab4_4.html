@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<head>
+    <title>4.4 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        // Початкові масиви
+        let fruits = ['apple', 'pineapple', 'mango', 'melon', 'grape'];
+        let citrus = ['orange', 'lemon', 'lime'];
+
+        // 1. Виведення масиву fruits
+        document.write("Масив fruits: " + fruits.join(", ") + "<br>");
+
+        // 2. Виведення масиву citrus
+        document.write("Масив citrus: " + citrus.join(", ") + "<br>");
+
+        // 3. Об'єднаний масив fruits та citrus
+        let combinedFruits = fruits.concat(citrus);
+        document.write("Об'єднаний масив fruits та citrus: " + combinedFruits.join(", ") + "<br>");
+
+        // 4. Вставка елементів після 'mango'
+        let indexMango = fruits.indexOf('mango');
+        if (indexMango !== -1) {
+            fruits.splice(indexMango + 1, 0, 'pear', 'cherry', 'plum', 'raspberry', 'strawberry');
+        }
+        document.write("Масив fruits після вставки: " + fruits.join(", ") + "<br>");
+
+        // 5. Видалення останніх 3 елементів
+        fruits.splice(-3);
+        document.write("Масив fruits після видалення останніх 3 елементів: " + fruits.join(", ") + "<br>");
+
+        // 6. Відсортований масив fruits в алфавітному порядку
+        let sortedAlphabetically = fruits.slice().sort();
+        document.write("Відсортований масив fruits (алфавітний порядок): " + sortedAlphabetically.join(", ") + "<br>");
+
+        // 7. Масив fruits у зворотному алфавітному порядку
+        let reverseAlphabetically = fruits.slice().sort().reverse();
+        document.write("Масив fruits у зворотному алфавітному порядку: " + reverseAlphabetically.join(", ") + "<br>");
+
+        // 8. Відсортований масив fruits за довжиною слів
+        let sortedByLength = fruits.slice().sort((a, b) => a.length - b.length);
+        document.write("Відсортований масив fruits за довжиною слів: " + sortedByLength.join(", ") + "<br>");
+    </script>
+</body>
+</html>

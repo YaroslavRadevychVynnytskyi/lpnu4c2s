@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <title>4.3 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <script>
+        // 1. Створення масиву з 15 випадкових елементів
+        let arr = [];
+        for (let i = 0; i < 15; i++) {
+            arr.push(Math.floor(Math.random() * 100)); // Генеруємо випадкові числа від 0 до 99
+        }
+        document.write("Початковий масив: " + arr.join(" ") + "<br>");
+
+        // 2. Задані значення D та C
+        let D = 50; // Задане значення D
+        let C = 30; // Задане значення C
+
+        // 3. Знаходження суми чисел, менших за D
+        let sumLessThanD = arr.filter(num => num < D).reduce((sum, num) => sum + num, 0);
+        document.write("Сума чисел, менших за " + D + ": " + sumLessThanD + "<br>");
+
+        // 4. Знаходження кількості чисел, що стоять на парних місцях і більших за C
+        let countEvenIndexGreaterThanC = arr.filter((num, index) => index % 2 === 0 && num > C).length;
+        document.write("Кількість чисел на парних місцях, більших за " + C + ": " + countEvenIndexGreaterThanC + "<br>");
+    </script>
+</body>
+</html>
