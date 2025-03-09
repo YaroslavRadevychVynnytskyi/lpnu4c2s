@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>4.1 Радевич-Винницький КІ-402</title>
+    </head>
+    <body>
+        <script>
+            // 1. Створення масиву Treag «трикутних» чисел
+            let Treag = [];
+            for (let n = 1; n <= 10; n++) {
+                Treag.push(n * (n + 1) / 2);
+            }
+            document.write("Трикутні числа: " + Treag.join("  ") + "<br>");
+    
+            // 2. Створення масиву kvd квадратів натуральних чисел
+            let kvd = [];
+            for (let i = 1; i <= 10; i++) {
+                kvd.push(i * i);
+            }
+            document.write("Квадрати чисел: " + kvd.join("  ") + "<br>");
+    
+            // 3. Об'єднання двох масивів в один масив rez
+            let rez = Treag.concat(kvd);
+            document.write("Об'єднаний масив: " + rez.join("  ") + "<br>");
+    
+            // 4. Сортування масиву rez у зворотному порядку
+            rez.sort((a, b) => b - a);
+            document.write("Відсортований масив у зворотному порядку: " + rez.join("  ") + "<br>");
+        </script>
+    </body>
+</html>
