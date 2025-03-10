@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.5 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Аналіз об'єктів мобільних телефонів</h1>
+    <div id="analysis-results"></div>
+
+    <script>
+        // Базовий клас MobilePhone (з завдання 3)
+        class MobilePhone {
+            constructor(type, os, screenSize, screenResolution, ram) {
+                this._type = type;
+                this._os = os;
+                this._screenSize = screenSize;
+                this._screenResolution = screenResolution;
+                this._ram = ram;
+            }
+
+            // Гетери
+            get type() {
+                return this._type;
+            }
+
+            get os() {
+                return this._os;
+            }
+
+            get screenSize() {
+                return this._screenSize;
+            }
+
+            get screenResolution() {
+                return this._screenResolution;
+            }
+
+            get ram() {
+                return this._ram;
+            }
+
+            // Сеттери
+            set type(newType) {
+                this._type = newType;
+            }
+
+            set os(newOS) {
+                this._os = newOS;
+            }
+
+            set screenSize(newScreenSize) {
+                this._screenSize = newScreenSize;
+            }
+
+            set screenResolution(newScreenResolution) {
+                this._screenResolution = newScreenResolution;
+            }
+
+            set ram(newRAM) {
+                this._ram = newRAM;
+            }
+
+            // Метод для відображення інформації про об'єкт
+            displayInfo() {
+                return `
+                    <p><strong>Тип:</strong> ${this._type}</p>
+                    <p><strong>Операційна система:</strong> ${this._os}</p>
+                    <p><strong>Розмір екрану:</strong> ${this._screenSize}</p>
+                    <p><strong>Роздільна здатність екрана:</strong> ${this._screenResolution}</p>
+                    <p><strong>Оперативна пам'ять:</strong> ${this._ram}</p>
+                `;
+            }
+        }
+
+        // Похідний клас AdvancedMobilePhone (з завдання 4)
+        class AdvancedMobilePhone extends MobilePhone {
+            constructor(type, os, screenSize, screenResolution, ram, releaseDate, price) {
+                super(type, os, screenSize, screenResolution, ram);
+                this._releaseDate = releaseDate;
+                this._price = price;
+            }
+
+            // Гетери для нових властивостей
+            get releaseDate() {
+                return this._releaseDate;
+            }
+
+            get price() {
+                return this._price;
+            }
+
+            // Сеттери для нових властивостей
+            set releaseDate(newReleaseDate) {
+                this._releaseDate = newReleaseDate;
+            }
+
+            set price(newPrice) {
+                this._price = newPrice;
+            }
+
+            // Перевизначений метод для відображення інформації про об'єкт
+            displayInfo() {
+                return `
+                    ${super.displayInfo()}
+                    <p><strong>Дата виходу ринку:</strong> ${this._releaseDate}</p>
+                    <p><strong>Вартість:</strong> ${this._price} грн</p>
+                `;
+            }
+        }
+
+        // Створення масиву об'єктів
+        const phones = [
+            new AdvancedMobilePhone("Смартфон", "Android", "6.5 дюймів", "2400x1080 пікселів", "8 ГБ", "2023-10-01", 15000),
+            new AdvancedMobilePhone("Геймерський смартфон", "Android", "6.7 дюймів", "3200x1440 пікселів", "12 ГБ", "2023-09-15", 20000),
+            new AdvancedMobilePhone("Бюджетний смартфон", "Android", "6.1 дюймів", "1600x720 пікселів", "4 ГБ", "2023-08-20", 8000),
+            new AdvancedMobilePhone("Флагман", "iOS", "6.7 дюймів", "2778x1284 пікселів", "6 ГБ", "2023-11-01", 30000),
+            new AdvancedMobilePhone("Середній клас", "Android", "6.3 дюймів", "2340x1080 пікселів", "6 ГБ", "2023-07-10", 12000)
+        ];
+
+        // Функція для аналізу масиву об'єктів
+        function analyzePhones(phones) {
+            // Знаходження об'єкта з максимальною вартістю
+            const maxPricePhone = phones.reduce((max, phone) => phone.price > max.price ? phone : max);
+
+            // Знаходження об'єкта з мінімальною вартістю
+            const minPricePhone = phones.reduce((min, phone) => phone.price < min.price ? phone : min);
+
+            // Сумарна вартість усіх об'єктів
+            const totalPrice = phones.reduce((sum, phone) => sum + phone.price, 0);
+
+            // Середня вартість об'єкта
+            const averagePrice = totalPrice / phones.length;
+
+            // Кількість об'єктів із вартістю вище за середню
+            const aboveAverageCount = phones.filter(phone => phone.price > averagePrice).length;
+
+            // Виведення результатів
+            const results = `
+                <h2>Результати аналізу:</h2>
+                <p><strong>Об'єкт з максимальною вартістю:</strong></p>
+                ${maxPricePhone.displayInfo()}
+                <p><strong>Об'єкт з мінімальною вартістю:</strong></p>
+                ${minPricePhone.displayInfo()}
+                <p><strong>Сумарна вартість усіх об'єктів:</strong> ${totalPrice} грн</p>
+                <p><strong>Середня вартість об'єкта:</strong> ${averagePrice.toFixed(2)} грн</p>
+                <p><strong>Кількість об'єктів із вартістю вище за середню:</strong> ${aboveAverageCount}</p>
+            `;
+
+            document.getElementById('analysis-results').innerHTML = results;
+        }
+
+        // Виклик функції для аналізу
+        analyzePhones(phones);
+    </script>
+</body>
+</html>

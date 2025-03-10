@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.2 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Інформація про мобільний телефон</h1>
+    <div id="phone-info"></div>
+
+    <script>
+        // Функція-конструктор для створення об'єктів "Мобільний телефон"
+        function MobilePhone(type, os, screenSize, screenResolution, ram) {
+            // Властивості об'єкта
+            this.type = type;
+            this.os = os;
+            this.screenSize = screenSize;
+            this.screenResolution = screenResolution;
+            this.ram = ram;
+
+            // Гетери
+            this.getType = function() {
+                return this.type;
+            };
+
+            this.getOS = function() {
+                return this.os;
+            };
+
+            this.getScreenSize = function() {
+                return this.screenSize;
+            };
+
+            this.getScreenResolution = function() {
+                return this.screenResolution;
+            };
+
+            this.getRAM = function() {
+                return this.ram;
+            };
+
+            // Сеттери
+            this.setType = function(newType) {
+                this.type = newType;
+            };
+
+            this.setOS = function(newOS) {
+                this.os = newOS;
+            };
+
+            this.setScreenSize = function(newScreenSize) {
+                this.screenSize = newScreenSize;
+            };
+
+            this.setScreenResolution = function(newScreenResolution) {
+                this.screenResolution = newScreenResolution;
+            };
+
+            this.setRAM = function(newRAM) {
+                this.ram = newRAM;
+            };
+        }
+
+        // Додавання властивості до прототипу (дата виходу ринку)
+        MobilePhone.prototype.releaseDate = "2023-10-01";
+
+        // Додавання методу до прототипу для відображення інформації про об'єкт
+        MobilePhone.prototype.displayInfo = function() {
+            return `
+                <p><strong>Тип:</strong> ${this.type}</p>
+                <p><strong>Операційна система:</strong> ${this.os}</p>
+                <p><strong>Розмір екрану:</strong> ${this.screenSize}</p>
+                <p><strong>Роздільна здатність екрана:</strong> ${this.screenResolution}</p>
+                <p><strong>Оперативна пам'ять:</strong> ${this.ram}</p>
+                <p><strong>Дата виходу ринку:</strong> ${this.releaseDate}</p>
+            `;
+        };
+
+        // Створення об'єкта за допомогою функції-конструктора
+        const myPhone = new MobilePhone(
+            "Смартфон",
+            "Android",
+            "6.5 дюймів",
+            "2400x1080 пікселів",
+            "8 ГБ"
+        );
+
+        // Виведення інформації про об'єкт на сторінку
+        document.getElementById('phone-info').innerHTML = myPhone.displayInfo();
+
+        // Приклад використання сеттерів
+        myPhone.setType("Геймерський смартфон");
+        myPhone.setRAM("12 ГБ");
+
+        // Виведення оновленої інформації
+        document.getElementById('phone-info').innerHTML += "<h2>Оновлена інформація:</h2>";
+        document.getElementById('phone-info').innerHTML += myPhone.displayInfo();
+    </script>
+</body>
+</html>
