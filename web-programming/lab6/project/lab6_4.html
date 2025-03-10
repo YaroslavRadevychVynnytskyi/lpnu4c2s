@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.4 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Інформація про розширений мобільний телефон</h1>
+    <div id="phone-info"></div>
+
+    <script>
+        // Базовий клас MobilePhone (з завдання 3)
+        class MobilePhone {
+            constructor(type, os, screenSize, screenResolution, ram) {
+                this._type = type;
+                this._os = os;
+                this._screenSize = screenSize;
+                this._screenResolution = screenResolution;
+                this._ram = ram;
+            }
+
+            // Гетери
+            get type() {
+                return this._type;
+            }
+
+            get os() {
+                return this._os;
+            }
+
+            get screenSize() {
+                return this._screenSize;
+            }
+
+            get screenResolution() {
+                return this._screenResolution;
+            }
+
+            get ram() {
+                return this._ram;
+            }
+
+            // Сеттери
+            set type(newType) {
+                this._type = newType;
+            }
+
+            set os(newOS) {
+                this._os = newOS;
+            }
+
+            set screenSize(newScreenSize) {
+                this._screenSize = newScreenSize;
+            }
+
+            set screenResolution(newScreenResolution) {
+                this._screenResolution = newScreenResolution;
+            }
+
+            set ram(newRAM) {
+                this._ram = newRAM;
+            }
+
+            // Метод для відображення інформації про об'єкт
+            displayInfo() {
+                return `
+                    <p><strong>Тип:</strong> ${this._type}</p>
+                    <p><strong>Операційна система:</strong> ${this._os}</p>
+                    <p><strong>Розмір екрану:</strong> ${this._screenSize}</p>
+                    <p><strong>Роздільна здатність екрана:</strong> ${this._screenResolution}</p>
+                    <p><strong>Оперативна пам'ять:</strong> ${this._ram}</p>
+                `;
+            }
+        }
+
+        // Похідний клас AdvancedMobilePhone
+        class AdvancedMobilePhone extends MobilePhone {
+            constructor(type, os, screenSize, screenResolution, ram, releaseDate, price) {
+                // Виклик конструктора базового класу
+                super(type, os, screenSize, screenResolution, ram);
+                this._releaseDate = releaseDate;
+                this._price = price;
+            }
+
+            // Гетери для нових властивостей
+            get releaseDate() {
+                return this._releaseDate;
+            }
+
+            get price() {
+                return this._price;
+            }
+
+            // Сеттери для нових властивостей
+            set releaseDate(newReleaseDate) {
+                this._releaseDate = newReleaseDate;
+            }
+
+            set price(newPrice) {
+                this._price = newPrice;
+            }
+
+            // Перевизначений метод для відображення інформації про об'єкт
+            displayInfo() {
+                return `
+                    ${super.displayInfo()}
+                    <p><strong>Дата виходу ринку:</strong> ${this._releaseDate}</p>
+                    <p><strong>Вартість:</strong> ${this._price} грн</p>
+                `;
+            }
+        }
+
+        // Створення об'єкта за допомогою похідного класу
+        const myAdvancedPhone = new AdvancedMobilePhone(
+            "Смартфон",
+            "Android",
+            "6.5 дюймів",
+            "2400x1080 пікселів",
+            "8 ГБ",
+            "2023-10-01",
+            15000
+        );
+
+        // Виведення інформації про об'єкт на сторінку
+        document.getElementById('phone-info').innerHTML = myAdvancedPhone.displayInfo();
+
+        // Приклад використання сеттерів
+        myAdvancedPhone.price = 14000;
+        myAdvancedPhone.releaseDate = "2023-09-15";
+
+        // Виведення оновленої інформації
+        document.getElementById('phone-info').innerHTML += "<h2>Оновлена інформація:</h2>";
+        document.getElementById('phone-info').innerHTML += myAdvancedPhone.displayInfo();
+    </script>
+</body>
+</html>

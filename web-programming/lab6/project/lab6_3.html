@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.3 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Інформація про мобільний телефон</h1>
+    <div id="phone-info"></div>
+
+    <script>
+        // Оголошення класу MobilePhone
+        class MobilePhone {
+            // Конструктор класу з параметрами
+            constructor(type, os, screenSize, screenResolution, ram) {
+                this._type = type;
+                this._os = os;
+                this._screenSize = screenSize;
+                this._screenResolution = screenResolution;
+                this._ram = ram;
+            }
+
+            // Гетери для отримання значень властивостей
+            get type() {
+                return this._type;
+            }
+
+            get os() {
+                return this._os;
+            }
+
+            get screenSize() {
+                return this._screenSize;
+            }
+
+            get screenResolution() {
+                return this._screenResolution;
+            }
+
+            get ram() {
+                return this._ram;
+            }
+
+            // Сеттери для зміни значень властивостей
+            set type(newType) {
+                this._type = newType;
+            }
+
+            set os(newOS) {
+                this._os = newOS;
+            }
+
+            set screenSize(newScreenSize) {
+                this._screenSize = newScreenSize;
+            }
+
+            set screenResolution(newScreenResolution) {
+                this._screenResolution = newScreenResolution;
+            }
+
+            set ram(newRAM) {
+                this._ram = newRAM;
+            }
+
+            // Метод для відображення інформації про об'єкт
+            displayInfo() {
+                return `
+                    <p><strong>Тип:</strong> ${this._type}</p>
+                    <p><strong>Операційна система:</strong> ${this._os}</p>
+                    <p><strong>Розмір екрану:</strong> ${this._screenSize}</p>
+                    <p><strong>Роздільна здатність екрана:</strong> ${this._screenResolution}</p>
+                    <p><strong>Оперативна пам'ять:</strong> ${this._ram}</p>
+                `;
+            }
+        }
+
+        // Створення об'єкта за допомогою класу
+        const myPhone = new MobilePhone(
+            "Смартфон",
+            "Android",
+            "6.5 дюймів",
+            "2400x1080 пікселів",
+            "8 ГБ"
+        );
+
+        // Виведення інформації про об'єкт на сторінку
+        document.getElementById('phone-info').innerHTML = myPhone.displayInfo();
+
+        // Приклад використання сеттерів
+        myPhone.type = "Геймерський смартфон";
+        myPhone.ram = "12 ГБ";
+
+        // Виведення оновленої інформації
+        document.getElementById('phone-info').innerHTML += "<h2>Оновлена інформація:</h2>";
+        document.getElementById('phone-info').innerHTML += myPhone.displayInfo();
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6.1 Радевич-Винницький КІ-402</title>
+</head>
+<body>
+    <h1>Інформація про мобільний телефон</h1>
+    <div id="phone-info"></div>
+
+    <script>
+        // Створення об'єкта "Мобільний телефон" за допомогою літералу
+        const mobilePhone = {
+            type: "Смартфон",
+            os: "Android",
+            screenSize: "6.5 дюймів",
+            screenResolution: "2400x1080 пікселів",
+            ram: "8 ГБ",
+
+            // Метод для виведення інформації про об'єкт
+            displayInfo: function() {
+                return `
+                    <p><strong>Тип:</strong> ${this.type}</p>
+                    <p><strong>Операційна система:</strong> ${this.os}</p>
+                    <p><strong>Розмір екрану:</strong> ${this.screenSize}</p>
+                    <p><strong>Роздільна здатність екрана:</strong> ${this.screenResolution}</p>
+                    <p><strong>Оперативна пам'ять:</strong> ${this.ram}</p>
+                `;
+            }
+        };
+
+        // Виведення інформації про об'єкт на сторінку
+        document.getElementById('phone-info').innerHTML = mobilePhone.displayInfo();
+    </script>
+</body>
+</html>
