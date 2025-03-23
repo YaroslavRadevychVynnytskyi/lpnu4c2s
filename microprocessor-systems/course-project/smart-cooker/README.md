@@ -8,7 +8,7 @@ A smart cooker IoT project that uses ESP32 to control a heating element via a re
 smart-cooker/
 ├── include/                     # Header files
 │   ├── BluetoothManager.h       # Bluetooth communication management
-│   ├── CommandTypes.h           # Command type enumerations
+│   ├── Enums.h                  # Enumeration definitions
 │   ├── Config.h                 # Configuration and pin definitions
 │   ├── CookingController.h      # Main cooking logic controller
 │   └── TemperatureSensor.h      # Temperature sensor interface
@@ -28,6 +28,12 @@ smart-cooker/
 - Predefined cooking programs:
   - Soft-boiled eggs (6 minutes at boiling temperature)
   - Hard-boiled eggs (12 minutes at boiling temperature)
+  - White rice (18 minutes cooking)
+  - Brown rice (40 minutes cooking)
+  - Stewed pork with multi-phase cooking:
+    - Phase 1: Searing (5 minutes at 180°C)
+    - Phase 2: Stewing (45-120 minutes at 85°C depending on cut)
+    - Phase 3: Resting (15 minutes, no heat)
 
 ## Command Interface
 
@@ -39,6 +45,11 @@ The system accepts the following commands via Bluetooth:
 - `OFF` - Turn off the cooker
 - `EGGS:1` - Start the soft-boiled eggs program
 - `EGGS:2` - Start the hard-boiled eggs program
+- `RICE:1` - Start the white rice cooking program
+- `RICE:2` - Start the brown rice cooking program
+- `PORK:1` - Start the stewed pork shoulder program (longest cooking time)
+- `PORK:2` - Start the stewed pork belly program (medium cooking time)
+- `PORK:3` - Start the stewed pork tenderloin program (shortest cooking time)
 
 ## Hardware Requirements
 

@@ -47,8 +47,20 @@ private:
     /** @brief Selected egg doneness level for egg programs */
     EggDoneness eggDoneness = EGG_SOFT;
     
+    /** @brief Selected rice type for rice programs */
+    RiceType riceType = RICE_WHITE;
+    
+    /** @brief Selected pork cut type for stewed pork program */
+    PorkCutType porkCutType = PORK_SHOULDER;
+    
+    /** @brief Current cooking phase for multi-phase recipes */
+    CookingPhase currentPhase = PHASE_SEARING;
+    
     /** @brief Flag indicating if target temperature has been reached */
     bool temperatureReached = false;
+    
+    /** @brief Current active cooking program */
+    CommandType activeCookingProgram = CMD_UNKNOWN;
 
     /**
      * @brief Controls the relay based on current cooking state
@@ -72,6 +84,32 @@ private:
      * @param doneness The desired egg doneness level
      */
     void handleEggsProgram(EggDoneness doneness);
+
+    /**
+     * @brief Configures and starts the rice cooking program
+     * 
+     * @param type The type of rice to cook
+     */
+    void handleRiceProgram(RiceType type);
+    
+    /**
+     * @brief Configures and starts the stewed pork program
+     * 
+     * Sets up the appropriate temperature and time parameters for
+     * the selected pork cut type and starts the multi-phase cooking process.
+     * 
+     * @param cutType The type of pork cut to stew
+     */
+    void handleStewedPorkProgram(PorkCutType cutType);
+    
+    /**
+     * @brief Moves to the next cooking phase in a multi-phase recipe
+     * 
+     * Updates temperature, time, and status for the new cooking phase.
+     * 
+     * @return bool True if moved to a new phase, false if cooking is complete
+     */
+    bool moveToNextPhase();
 
 public:
     /**

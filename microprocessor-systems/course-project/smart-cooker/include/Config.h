@@ -26,6 +26,15 @@
 /** @brief Boiling temperature of water in degrees Celsius */
 #define BOILING_TEMP 100
 
+/** @brief Cooking temperature for rice in degrees Celsius */
+#define RICE_COOKING_TEMP 100
+
+/** @brief Searing temperature for meat in degrees Celsius */
+#define SEARING_TEMP 180
+
+/** @brief Stewing temperature for pork in degrees Celsius */
+#define STEWING_TEMP 85
+
 //------------------------------------------------------------------------------
 // Time constants (in minutes)
 //------------------------------------------------------------------------------
@@ -34,4 +43,25 @@
 #define SOFT_BOILED_TIME 6
 
 /** @brief Cooking time for hard-boiled eggs in minutes */
-#define HARD_BOILED_TIME 12 
+#define HARD_BOILED_TIME 12
+
+/** @brief Cooking time for white rice in minutes */
+#define WHITE_RICE_TIME 18
+
+/** @brief Cooking time for brown rice in minutes */
+#define BROWN_RICE_TIME 40
+
+/** @brief Searing time for meat in minutes */
+#define SEARING_TIME 5
+
+/** @brief Stewing time for pork shoulder in minutes */
+#define PORK_SHOULDER_TIME 120
+
+/** @brief Stewing time for pork belly in minutes */
+#define PORK_BELLY_TIME 90
+
+/** @brief Stewing time for pork tenderloin in minutes */
+#define PORK_TENDERLOIN_TIME 45
+
+/** @brief Resting time after cooking in minutes */
+#define RESTING_TIME 15 

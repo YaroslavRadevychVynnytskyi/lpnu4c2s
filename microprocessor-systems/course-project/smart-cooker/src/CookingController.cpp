@@ -20,7 +20,7 @@ CookingController::CookingController(BluetoothManager& bt, TemperatureSensor& te
  */
 void CookingController::begin() {
     pinMode(RELAY_PIN, OUTPUT);
-    digitalWrite(RELAY_PIN, LOW);
+    digitalWrite(RELAY_PIN, LOW); // Turn off the relay initially
     Serial.println("Cooking controller initialized");
 }
 
@@ -37,6 +37,8 @@ void CookingController::processCommand(const String& command) {
     CommandType cmdType = btManager.parseCommand(command, value);
     
     int doneness;
+    int riceTypeValue;
+    int porkCutTypeValue;
     
     switch (cmdType) {
         case CMD_SET_TEMP:
@@ -63,6 +65,30 @@ void CookingController::processCommand(const String& command) {
                 handleEggsProgram(EGG_HARD);
             } else {
                 btManager.sendMessage("Invalid egg doneness selection. Use 1 for soft, 2 for hard.");
+            }
+            break;
+            
+        case CMD_RICE:
+            riceTypeValue = value.toInt();
+            if (riceTypeValue == RICE_WHITE) {
+                handleRiceProgram(RICE_WHITE);
+            } else if (riceTypeValue == RICE_BROWN) {
+                handleRiceProgram(RICE_BROWN);
+            } else {
+                btManager.sendMessage("Invalid rice type. Use 1 for white rice, 2 for brown rice.");
+            }
+            break;
+            
+        case CMD_STEWED_PORK:
+            porkCutTypeValue = value.toInt();
+            if (porkCutTypeValue == PORK_SHOULDER) {
+                handleStewedPorkProgram(PORK_SHOULDER);
+            } else if (porkCutTypeValue == PORK_BELLY) {
+                handleStewedPorkProgram(PORK_BELLY);
+            } else if (porkCutTypeValue == PORK_TENDERLOIN) {
+                handleStewedPorkProgram(PORK_TENDERLOIN);
+            } else {
+                btManager.sendMessage("Invalid pork cut type. Use 1 for shoulder, 2 for belly, 3 for tenderloin.");
             }
             break;
         
@@ -118,6 +144,7 @@ void CookingController::setTargetTime(int time) {
 void CookingController::turnOff() {
     digitalWrite(RELAY_PIN, LOW);
     cookingActive = false;
+    activeCookingProgram = CMD_UNKNOWN;
     btManager.sendMessage("Cooker turned OFF");
 }
 
@@ -132,6 +159,7 @@ void CookingController::turnOff() {
 void CookingController::handleEggsProgram(EggDoneness doneness) {
     setTemp = BOILING_TEMP;
     eggDoneness = doneness;
+    activeCookingProgram = CMD_BOILED_EGGS;
     
     if (doneness == EGG_SOFT) {
         setTime = SOFT_BOILED_TIME;
@@ -147,6 +175,132 @@ void CookingController::handleEggsProgram(EggDoneness doneness) {
 }
 
 /**
+ * @brief Configures and starts the rice cooking program
+ * 
+ * Sets up the appropriate temperature and time parameters for
+ * the selected rice type and starts the cooking process.
+ * 
+ * @param type The type of rice to cook (white or brown)
+ */
+void CookingController::handleRiceProgram(RiceType type) {
+    setTemp = RICE_COOKING_TEMP;
+    riceType = type;
+    activeCookingProgram = CMD_RICE;
+    
+    if (type == RICE_WHITE) {
+        setTime = WHITE_RICE_TIME;
+        btManager.sendMessage("White rice selected. " + String(WHITE_RICE_TIME) + " minutes cooking time.");
+        btManager.sendMessage("Tip: Use 1.5 cups of water per 1 cup of white rice.");
+    } else {
+        setTime = BROWN_RICE_TIME;
+        btManager.sendMessage("Brown rice selected. " + String(BROWN_RICE_TIME) + " minutes cooking time.");
+        btManager.sendMessage("Tip: Use 2 cups of water per 1 cup of brown rice.");
+    }
+    
+    cookingActive = true;
+    temperatureReached = false;
+    btManager.sendMessage("Starting rice cooking program. Heating to " + String(RICE_COOKING_TEMP) + "°C...");
+}
+
+/**
+ * @brief Configures and starts the stewed pork program
+ * 
+ * Sets up the appropriate temperature and time parameters for
+ * the selected pork cut type and starts the multi-phase cooking process.
+ * 
+ * @param cutType The type of pork cut to stew
+ */
+void CookingController::handleStewedPorkProgram(PorkCutType cutType) {
+    porkCutType = cutType;
+    activeCookingProgram = CMD_STEWED_PORK;
+    currentPhase = PHASE_SEARING;
+    
+    // Initial searing phase
+    setTemp = SEARING_TEMP;
+    setTime = SEARING_TIME;
+    
+    String cutName;
+    int totalTime = 0;
+    
+    switch (cutType) {
+        case PORK_SHOULDER:
+            cutName = "shoulder";
+            totalTime = SEARING_TIME + PORK_SHOULDER_TIME + RESTING_TIME;
+            break;
+        case PORK_BELLY:
+            cutName = "belly";
+            totalTime = SEARING_TIME + PORK_BELLY_TIME + RESTING_TIME;
+            break;
+        case PORK_TENDERLOIN:
+            cutName = "tenderloin";
+            totalTime = SEARING_TIME + PORK_TENDERLOIN_TIME + RESTING_TIME;
+            break;
+    }
+    
+    btManager.sendMessage("Stewed pork " + cutName + " selected. Total estimated cooking time: " + String(totalTime) + " minutes.");
+    btManager.sendMessage("Tip: Season the meat with salt, pepper, and your favorite herbs before cooking.");
+    btManager.sendMessage("Phase 1: Searing at " + String(SEARING_TEMP) + "°C for " + String(SEARING_TIME) + " minutes.");
+    
+    cookingActive = true;
+    temperatureReached = false;
+    btManager.sendMessage("Starting pork stewing program. Heating to searing temperature...");
+}
+
+/**
+ * @brief Moves to the next cooking phase in a multi-phase recipe
+ * 
+ * Updates temperature, time, and status for the new cooking phase.
+ * 
+ * @return bool True if moved to a new phase, false if cooking is complete
+ */
+bool CookingController::moveToNextPhase() {
+    if (activeCookingProgram == CMD_STEWED_PORK) {
+        switch (currentPhase) {
+            case PHASE_SEARING:
+                // Move to main cooking phase
+                currentPhase = PHASE_COOKING;
+                setTemp = STEWING_TEMP;
+                
+                // Set cooking time based on cut type
+                switch (porkCutType) {
+                    case PORK_SHOULDER:
+                        setTime = PORK_SHOULDER_TIME;
+                        break;
+                    case PORK_BELLY:
+                        setTime = PORK_BELLY_TIME;
+                        break;
+                    case PORK_TENDERLOIN:
+                        setTime = PORK_TENDERLOIN_TIME;
+                        break;
+                }
+                
+                btManager.sendMessage("Phase 2: Stewing at " + String(STEWING_TEMP) + "°C for " + String(setTime) + " minutes.");
+                temperatureReached = false;
+                return true;
+                
+            case PHASE_COOKING:
+                // Move to resting phase
+                currentPhase = PHASE_RESTING;
+                setTemp = 0; // No heat needed for resting
+                setTime = RESTING_TIME;
+                
+                btManager.sendMessage("Phase 3: Resting for " + String(RESTING_TIME) + " minutes.");
+                temperatureReached = true;
+                return true;
+                
+            case PHASE_RESTING:
+                // End of all phases
+                return false;
+                
+            default:
+                return false;
+        }
+    }
+    
+    return false; // Not a multi-phase recipe
+}
+
+/**
  * @brief Updates the cooking status and sends progress information
  * 
  * Tracks cooking progress, checks if boiling point has been reached,
@@ -158,10 +312,10 @@ void CookingController::updateCookingStatus() {
         if (currentTemp >= setTemp && !temperatureReached) {
             temperatureReached = true;
             cookingStartTime = millis();
-            btManager.sendMessage("Water is boiling! Starting timer for " + String(setTime) + " minutes.");
+            btManager.sendMessage("Target temperature reached! Starting timer for " + String(setTime) + " minutes.");
         }
         
-        // If boiling point reached and timer is running
+        // If target temperature reached and timer is running
         if (temperatureReached) {
             // Calculate remaining time
             unsigned long elapsedSeconds = (millis() - cookingStartTime) / 1000;
@@ -169,17 +323,58 @@ void CookingController::updateCookingStatus() {
             
             // Send status update every 10 seconds
             if (elapsedSeconds % 10 == 0 && elapsedSeconds > 0) {
-                btManager.sendMessage("Cooking in progress. " + String(remainingSeconds / 60) + ":" + 
-                                 String(remainingSeconds % 60) + " remaining.");
+                if (activeCookingProgram == CMD_STEWED_PORK) {
+                    String phaseName;
+                    switch (currentPhase) {
+                        case PHASE_SEARING: phaseName = "Searing"; break;
+                        case PHASE_COOKING: phaseName = "Stewing"; break;
+                        case PHASE_RESTING: phaseName = "Resting"; break;
+                    }
+                    
+                    btManager.sendMessage("Phase: " + phaseName + ". " + String(remainingSeconds / 60) + ":" + 
+                                     String(remainingSeconds % 60) + " remaining.");
+                } else {
+                    btManager.sendMessage("Cooking in progress. " + String(remainingSeconds / 60) + ":" + 
+                                     String(remainingSeconds % 60) + " remaining.");
+                }
             }
             
-            // Check if cooking is complete
+            // Check if current phase is complete
             if (remainingSeconds <= 0) {
-                digitalWrite(RELAY_PIN, LOW);
-                cookingActive = false;
-                btManager.sendMessage("Cooking complete! Your " + 
-                                 String(eggDoneness == EGG_SOFT ? "soft" : "hard") + 
-                                 "-boiled eggs are ready.");
+                // For multi-phase recipes, move to next phase if available
+                if (activeCookingProgram == CMD_STEWED_PORK && moveToNextPhase()) {
+                    // Reset timer for the new phase
+                    cookingStartTime = millis();
+                } else {
+                    // Cooking complete
+                    digitalWrite(RELAY_PIN, LOW);
+                    cookingActive = false;
+                    
+                    // Sending completion message based on what was being cooked
+                    if (activeCookingProgram == CMD_BOILED_EGGS) {
+                        btManager.sendMessage("Cooking complete! Your " + 
+                                        String(eggDoneness == EGG_SOFT ? "soft" : "hard") + 
+                                        "-boiled eggs are ready.");
+                    } else if (activeCookingProgram == CMD_RICE) {
+                        btManager.sendMessage("Cooking complete! Your " + 
+                                        String(riceType == RICE_WHITE ? "white" : "brown") + 
+                                        " rice is ready.");
+                        btManager.sendMessage("Let it rest for 5-10 minutes before serving for best results.");
+                    } else if (activeCookingProgram == CMD_STEWED_PORK) {
+                        String cutName;
+                        switch (porkCutType) {
+                            case PORK_SHOULDER: cutName = "shoulder"; break;
+                            case PORK_BELLY: cutName = "belly"; break;
+                            case PORK_TENDERLOIN: cutName = "tenderloin"; break;
+                        }
+                        btManager.sendMessage("Cooking complete! Your stewed pork " + cutName + " is ready.");
+                        btManager.sendMessage("Enjoy your delicious, tender pork dish!");
+                    } else {
+                        btManager.sendMessage("Cooking complete! Your food is ready.");
+                    }
+                    
+                    activeCookingProgram = CMD_UNKNOWN;
+                }
             }
         }
     }
@@ -193,8 +388,12 @@ void CookingController::updateCookingStatus() {
  */
 void CookingController::controlRelay() {
     if (cookingActive) {
+        // For resting phase, keep the relay off
+        if (activeCookingProgram == CMD_STEWED_PORK && currentPhase == PHASE_RESTING) {
+            digitalWrite(RELAY_PIN, LOW);
+        } 
         // Keep the relay on while cooking is active and we haven't reached the set time
-        if (!temperatureReached || (millis() - cookingStartTime) / 1000 < (setTime * 60)) {
+        else if (!temperatureReached || (millis() - cookingStartTime) / 1000 < (setTime * 60)) {
             digitalWrite(RELAY_PIN, HIGH); // Turn on the heater
         } else {
             digitalWrite(RELAY_PIN, LOW); // Turn off the heater

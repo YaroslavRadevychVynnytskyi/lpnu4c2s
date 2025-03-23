@@ -78,6 +78,12 @@ CommandType BluetoothManager::parseCommand(const String& command, String& value)
     } else if (command.startsWith("EGGS:")) {
         value = command.substring(5);
         return CMD_BOILED_EGGS;
+    } else if (command.startsWith("RICE:")) {
+        value = command.substring(5);
+        return CMD_RICE;
+    } else if (command.startsWith("PORK:")) {
+        value = command.substring(5);
+        return CMD_STEWED_PORK;
     }
     return CMD_UNKNOWN;
 } 
